@@ -11,7 +11,7 @@ pipeline {
                 }
             }
         }
-        
+        k
         stage('Push Docker Image') {
             steps {
                 script {
