@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Deploy To Kubernetes') {
             steps {
-                kubeconfig(credentialsId: 'k8-tkn', serverUrl: 'https://B9547621C1C2F5C00E132453436EA758.gr7.us-east-1.eks.amazonaws.com') {
+                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-3', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B9547621C1C2F5C00E132453436EA758.gr7.us-east-1.eks.amazonaws.com']]) {
                     sh "kubectl apply -f deployment-service.yml"
                     
                 }
@@ -13,7 +13,7 @@ pipeline {
         
         stage('verify Deployment') {
             steps {
-                kubeconfig(credentialsId: 'k8-tkn', serverUrl: 'https://B9547621C1C2F5C00E132453436EA758.gr7.us-east-1.eks.amazonaws.com') {
+                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-3', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://B9547621C1C2F5C00E132453436EA758.gr7.us-east-1.eks.amazonaws.com']]) {
                     sh "kubectl get svc -n webapps"
                 }
             }
